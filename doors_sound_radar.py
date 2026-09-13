@@ -10,6 +10,7 @@ Rush and Ambush share a sound: repeated hits auto-report as Ambush.
 
 import os
 import queue
+import sys
 import threading
 import time
 import wave
@@ -18,7 +19,10 @@ import numpy as np
 import tkinter as tk
 from tkinter import ttk
 
-APP_DIR = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, "frozen", False):
+    APP_DIR = os.path.dirname(sys.executable)
+else:
+    APP_DIR = os.path.dirname(os.path.abspath(__file__))
 TPL_DIR = os.path.join(APP_DIR, "templates")
 
 KEEP_SECS = 25.0
@@ -149,7 +153,11 @@ class Radar(threading.Thread):
     def start_recording(self, name):
         if self._pending is not None:
             return
-        self._pending = [name, [], REC_SECS * self.sr]
+        frames = []
+        back = int(2.5 * self.sr)
+        if len(self._buf) >= back:
+            frames.append(self._buf[-back:].copy())
+        self._pending = [name, frames, REC_SECS * self.sr]
         self.status["rec"] = (name, REC_SECS)
 
     def stop_recording(self):
@@ -415,8 +423,9 @@ class Overlay:
 
         body = tk.Frame(r, bg=self.BG)
         body.pack(fill="both", expand=True, padx=8, pady=4)
-        tk.Label(body, text="record one 2-4s clip of the sound (REC), on any "
-                            "match it alerts you. Ambush = repeated Rush.",
+        tk.Label(body, text="hear a sound? click REC even up to 2s LATE - it "
+                            "grabs the last 2.5s + next 1.5s and learns it. "
+                            "One sample per entity, saved forever.",
                  bg=self.BG, fg="#6a7290", font=("Segoe UI", 8),
                  wraplength=self.W - 26, justify="left").pack(anchor="w")
         for name in ENTITIES:
@@ -547,10 +556,11 @@ class Overlay:
 
 
 def main():
-    missing = [m for m in ("numpy", "pyaudiowpatch") if _find_spec(m) is None]
-    if missing:
-        print("missing deps. run:  pip install " + " ".join(missing))
-        return 1
+    if not getattr(sys, "frozen", False):
+        missing = [m for m in ("numpy", "pyaudiowpatch") if _find_spec(m) is None]
+        if missing:
+            print("missing deps. run:  pip install " + " ".join(missing))
+            return 1
     os.makedirs(TPL_DIR, exist_ok=True)
     radar = Radar()
     radar.start()

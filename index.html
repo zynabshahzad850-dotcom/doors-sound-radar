@@ -49,8 +49,8 @@
   <p class="tag">Hear the entity before it hears you.<br>
   A free, open-source audio overlay for Roblox DOORS that listens to your
   speakers and instantly shows what's coming &mdash; and how to survive it.</p>
-  <a class="btn main" href="doors-sound-radar.zip" download>&#11015;&#11015; Download the app (.zip)</a>
-  <a class="btn ghost" href="doors_sound_radar.py" download>Just the script</a>
+  <a class="btn main" href="https://github.com/zynabshahzad850-dotcom/doors-sound-radar/releases/download/v1.0/DOORS-Sound-Radar-Windows.zip" download>&#11015; Download for Windows - free</a>
+  <a class="btn ghost" href="https://github.com/zynabshahzad850-dotcom/doors-sound-radar" rel="noopener">Source / Python version</a>
 </header>
 
 <div class="wrap">
@@ -81,23 +81,24 @@
 </section>
 
 <section>
-  <h2>Setup (3 minutes)</h2>
+  <h2>Setup (1 minute &mdash; nothing to install)</h2>
   <ol>
-    <li>Install <a href="https://www.python.org/downloads/" rel="noopener">Python 3.12+</a> (tick "Add python.exe to PATH").</li>
-    <li>Unzip the download, then open a terminal in the folder and run:<br>
-      <code>pip install -r requirements.txt</code></li>
-    <li>Double-click <code>Start Sound Radar.bat</code> &mdash; the overlay appears top-right.</li>
-    <li>Play DOORS (windowed / borderless so you see the overlay) and press <code>REC</code> the first few times you hear each sound.</li>
-    <li>Done. From then on it alerts you automatically. Tune the sensitivity slider if needed.</li>
+    <li>Download &amp; unzip the Windows file.</li>
+    <li>Double-click <code>DOORS Sound Radar.exe</code>. If Windows warns (new unsigned app): "More info" &rarr; "Run anyway".</li>
+    <li>The overlay appears top-right and is already listening. Play DOORS in windowed/borderless mode.</li>
+    <li><b>Teach it each entity once:</b> the first time you HEAR e.g. Rush, hit its <code>REC</code> button.
+        You can press up to ~2 seconds late &mdash; it also captures the 2.5s before you clicked. One click per sound, done forever.</li>
+    <li>From then on it auto-alerts: entity name, confidence %, survival tip.</li>
   </ol>
+  <div class="note">Why the one click? The entity audio belongs to the game's creators, so we can't bundle ripped sound files &mdash; but 3 seconds you capture yourself is all it needs, and that sample never leaves your PC.</div>
 </section>
 
 <section>
   <h2>Requirements &amp; notes</h2>
   <div class="grid">
-    <div class="card"><b>Windows</b><span>Uses WASAPI loopback capture.</span></div>
-    <div class="card"><b>Python 3.10+</b><span>numpy + pyaudiowpatch only.</span></div>
-    <div class="card"><b>Passive only</b><span>No game files touched, no cheat client. Still: use at your own risk regarding Roblox ToS.</span></div>
+    <div class="card"><b>Windows 10/11</b><span>Portable exe &mdash; no Python, no admin, nothing installed.</span></div>
+    <div class="card"><b>Passive only</b><span>No game files touched, no memory reading, no injection. Use at your own risk regarding Roblox ToS.</span></div>
+    <div class="card"><b>Works offline</b><span>All processing happens on your machine. No account, no telemetry.</span></div>
   </div>
 </section>
 </div>
